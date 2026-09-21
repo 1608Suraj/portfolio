@@ -9,9 +9,17 @@
 <meta property="og:title" content="Suraj Yadav — Developer and Analyst">
 <meta property="og:description" content="Portfolio covering profile, skills, experience, projects and certificates.">
 <meta property="og:type" content="website">
-<meta name="twitter:card" content="summary">
+<meta property="og:site_name" content="Suraj Yadav">
+<meta property="og:url" content="https://surajyadav.dev">
+<meta property="og:image" content="https://surajyadav.dev/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Suraj Yadav — Developer and Analyst">
+<link rel="canonical" href="https://surajyadav.dev">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Suraj Yadav — Developer and Analyst">
 <meta name="twitter:description" content="Portfolio covering profile, skills, experience, projects and certificates.">
+<meta name="twitter:image" content="https://surajyadav.dev/og-image.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23F1ECDC'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%238C3527' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -124,6 +132,24 @@
   .meta a{ text-decoration:underline; }
   .body-text{ font-size:calc(18px * var(--fit-scale,1)); line-height:1.6; margin:0 0 calc(6px * var(--fit-scale,1)) 0; }
   .tag{ font-size:14px; color:var(--accent); font-style:italic; }
+  .skill-tags{ display:flex; flex-wrap:wrap; gap:calc(8px * var(--fit-scale,1)); margin-top:2px; }
+  .skill-tag{
+    font-size:calc(14px * var(--fit-scale,1)); color:var(--text);
+    padding:calc(4px * var(--fit-scale,1)) calc(10px * var(--fit-scale,1));
+    border:1px solid var(--rule);
+  }
+
+  .split-groups{ display:flex; flex-direction:column; gap:calc(30px * var(--fit-scale,1)); }
+  @media (min-width:900px){
+    .split-groups{ flex-direction:row; gap:44px; max-width:880px; margin:0 auto; }
+    .split-groups > .half{ flex:1 1 0; min-width:0; }
+  }
+  .group-title{
+    font-size:calc(15px * var(--fit-scale,1)); font-weight:600; color:var(--text-dim);
+    letter-spacing:0.3px; margin:0 0 calc(12px * var(--fit-scale,1)) 0;
+    padding-bottom:calc(6px * var(--fit-scale,1)); border-bottom:1px solid var(--rule);
+  }
+  .half > .group-title:not(:first-child){ margin-top:calc(28px * var(--fit-scale,1)); }
 
   .masthead{
     font-size:44px; font-weight:900; text-align:center; margin:6px 0 4px 0; letter-spacing:0.5px;
@@ -262,18 +288,23 @@
 
   /* ---- Section content ---- */
 
+  var BIO_TEXT = 'Developer and Analyst with hands-on experience in application support, data analysis, and backend automation. Skilled in diagnosing and resolving issues across Python-based systems, with working knowledge of Flask/FastAPI, SQL, and API testing and debugging tools. Comfortable collaborating with cross-functional teams to troubleshoot, document, and resolve production issues quickly.';
+
   var SECTIONS = [
     {
-      id: 'about', name: 'Profile & Skills', kind: 'about',
+      id: 'skills', name: 'Skills & Certificates', kind: 'skills',
       items: [
-        { type:'bio', text:'Developer and Analyst with hands-on experience in application support, data analysis, and backend automation. Skilled in diagnosing and resolving issues across Python-based systems, with working knowledge of Flask/FastAPI, SQL, and API testing and debugging tools. Comfortable collaborating with cross-functional teams to troubleshoot, document, and resolve production issues quickly.' },
         { type:'education', degree:'Bachelor of Computer Science (BCS)', school:'DAVV University, Indore', years:'2023 – 2027', cgpa:'CGPA: 7.0' },
         { type:'skill', category:'Programming languages', list:'Python, Java' },
         { type:'skill', category:'Web frameworks', list:'Flask, FastAPI' },
         { type:'skill', category:'Databases', list:'MySQL, PostgreSQL, MongoDB' },
         { type:'skill', category:'Data & ML libraries', list:'Pandas, Matplotlib, Scikit-learn, Seaborn' },
         { type:'skill', category:'Debugging & support tools', list:'Python pdb, VS Code Debugger, Postman (API testing), Jira' },
-        { type:'skill', category:'Tools & platforms', list:'Git, GitHub, VS Code, GCP, Groq, Docker (basic), Linux' }
+        { type:'skill', category:'Tools & platforms', list:'Git, GitHub, VS Code, GCP, Groq, Docker (basic), Linux' },
+        { type:'certificate', title:'Design, Develop, and Deploy Multi-Agent Systems with CrewAI', issuer:'DeepLearning.AI', link:'https://learn.deeplearning.ai/certificates/496d3b01-a25f-4acd-a522-286f47effe34' },
+        { type:'certificate', title:'Build & Deploy Apps with Google AI Studio & Multilingual AI Speech App', issuer:'GUVI', link:'https://www.guvi.in/verify-certificate.html?id=12yp0FE3S79918m970&course=buildingdeployingapplicationswithgoogleaistudio' },
+        { type:'certificate', title:'Fast Prototyping of GenAI Apps with Streamlit', issuer:'DeepLearning.AI', link:'https://learn.deeplearning.ai/certificates/9c92bafa-e4bd-42eb-bcbd-cea7c215bfc3' },
+        { type:'certificate', title:'Deloitte Australia Data Analytics Job Simulation', issuer:'Forage', note:'March 2026', link:'https://drive.google.com/file/d/1nwaaauXrl4MUrkA-c0nuFYKBDyih3G7S/view?usp=drivesdk' }
       ]
     },
     {
@@ -292,15 +323,11 @@
       ]
     },
     {
-      id: 'work', name: 'Projects & Certificates', kind: 'work',
+      id: 'projects', name: 'Projects', kind: 'projects',
       items: [
         { type:'project', name:'Healthcare Assistant', summary:'A Python-based healthcare assistant app built with Streamlit for easy user interaction — helping people get quick, simple health-related information through a clean web interface.', tag:'Deployed online, accessible directly from a browser.', linkLabel:'Open the live app', linkUrl:'https://healthcare-assist-o.streamlit.app' },
         { type:'project', name:'Employee Management System', summary:'A system to manage employee records — add, update and search — built with Python and Streamlit for a simple, user-friendly interface.', tag:'Designed to cut down manual work in tracking employee data.', linkLabel:'Open the live app', linkUrl:'https://employee-mangmnt.streamlit.app' },
-        { type:'project', name:'Virat Kohli Score Analytics', summary:'An analysis of Virat Kohli\u2019s cricket performance data using Python and Pandas, with Matplotlib visualisations showing scoring trends and patterns.', tag:'Organised on GitHub with a clear, reusable code structure.', linkLabel:'View on GitHub', linkUrl:'https://github.com/1608Suraj/Viratkohli_Analytics' },
-        { type:'certificate', firstOfGroup:true, title:'Design, Develop, and Deploy Multi-Agent Systems with CrewAI', issuer:'DeepLearning.AI', link:'https://learn.deeplearning.ai/certificates/496d3b01-a25f-4acd-a522-286f47effe34' },
-        { type:'certificate', title:'Build & Deploy Apps with Google AI Studio & Multilingual AI Speech App', issuer:'GUVI', link:'https://www.guvi.in/verify-certificate.html?id=12yp0FE3S79918m970&course=buildingdeployingapplicationswithgoogleaistudio' },
-        { type:'certificate', title:'Fast Prototyping of GenAI Apps with Streamlit', issuer:'DeepLearning.AI', link:'https://learn.deeplearning.ai/certificates/9c92bafa-e4bd-42eb-bcbd-cea7c215bfc3' },
-        { type:'certificate', title:'Deloitte Australia Data Analytics Job Simulation', issuer:'Forage', note:'March 2026', link:'https://drive.google.com/file/d/1nwaaauXrl4MUrkA-c0nuFYKBDyih3G7S/view?usp=drivesdk' }
+        { type:'project', name:'Virat Kohli Score Analytics', summary:'An analysis of Virat Kohli\u2019s cricket performance data using Python and Pandas, with Matplotlib visualisations showing scoring trends and patterns.', tag:'Organised on GitHub with a clear, reusable code structure.', linkLabel:'View on GitHub', linkUrl:'https://github.com/1608Suraj/Viratkohli_Analytics' }
       ]
     },
     {
@@ -334,16 +361,19 @@
     var parts = [];
     parts.push('<div class="'+cls+'" data-sec="'+sectionId+'" data-idx="'+idx+'">');
 
-    if (sectionId === 'about'){
-      if (item.type === 'bio'){
-        parts.push('<p class="body-text">'+esc(item.text)+'</p>');
-      } else if (item.type === 'education'){
+    if (sectionId === 'skills'){
+      if (item.type === 'education'){
         parts.push('<p class="headline">'+esc(item.degree)+'</p>');
         parts.push('<p class="dek">'+esc(item.school)+'</p>');
         parts.push('<p class="meta">'+esc(item.years)+' · '+esc(item.cgpa)+'</p>');
       } else if (item.type === 'skill'){
         parts.push('<p class="headline">'+esc(item.category)+'</p>');
-        parts.push('<p class="body-text">'+esc(item.list)+'</p>');
+        var tags = item.list.split(',').map(function(s){ return s.trim(); });
+        parts.push('<div class="skill-tags">'+tags.map(function(t){ return '<span class="skill-tag">'+esc(t)+'</span>'; }).join('')+'</div>');
+      } else if (item.type === 'certificate'){
+        parts.push('<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer" class="headline tappable">'+esc(item.title)+'</a>');
+        parts.push('<p class="meta">'+esc(item.issuer)+(item.note ? ' · '+esc(item.note) : '')+'</p>');
+        parts.push('<p class="meta"><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer">View certificate</a></p>');
       }
     } else if (sectionId === 'experience'){
       parts.push('<p class="headline">'+esc(item.role)+' — '+esc(item.company)+'</p>');
@@ -351,18 +381,11 @@
       item.bullets.forEach(function(b){
         parts.push('<p class="body-text">\u2022 '+esc(b)+'</p>');
       });
-    } else if (sectionId === 'work'){
-      if (item.type === 'project'){
-        parts.push('<a href="'+esc(item.linkUrl)+'" target="_blank" rel="noopener noreferrer" class="headline tappable">'+esc(item.name)+'</a>');
-        parts.push('<p class="body-text">'+esc(item.summary)+'</p>');
-        parts.push('<p class="dek">'+esc(item.tag)+'</p>');
-        parts.push('<p class="meta"><a href="'+esc(item.linkUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(item.linkLabel)+'</a></p>');
-      } else if (item.type === 'certificate'){
-        if (item.firstOfGroup) parts.push('<p class="sec-note" style="margin:0 0 10px 0;">Certificates</p>');
-        parts.push('<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer" class="headline tappable">'+esc(item.title)+'</a>');
-        parts.push('<p class="meta">'+esc(item.issuer)+(item.note ? ' · '+esc(item.note) : '')+'</p>');
-        parts.push('<p class="meta"><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer">View certificate</a></p>');
-      }
+    } else if (sectionId === 'projects'){
+      parts.push('<a href="'+esc(item.linkUrl)+'" target="_blank" rel="noopener noreferrer" class="headline tappable">'+esc(item.name)+'</a>');
+      parts.push('<p class="body-text">'+esc(item.summary)+'</p>');
+      parts.push('<p class="dek">'+esc(item.tag)+'</p>');
+      parts.push('<p class="meta"><a href="'+esc(item.linkUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(item.linkLabel)+'</a></p>');
     } else if (sectionId === 'contact'){
       if (item.href){
         var isExternal = item.href.indexOf('http') === 0;
@@ -399,17 +422,28 @@
   }
 
   function renderFrontPage(){
-    var about = SECTIONS.filter(function(s){ return s.id === 'about'; })[0];
-    var bioItem = about.items.filter(function(i){ return i.type === 'bio'; })[0];
-    var eduItem = about.items.filter(function(i){ return i.type === 'education'; })[0];
-    var currentExp = SECTIONS.filter(function(s){ return s.id === 'experience'; })[0].items[0];
+    var skillsSection = SECTIONS.filter(function(s){ return s.id === 'skills'; })[0];
+    var eduItem = skillsSection.items.filter(function(i){ return i.type === 'education'; })[0];
+    var certCount = skillsSection.items.filter(function(i){ return i.type === 'certificate'; }).length;
+    var skillGroupCount = skillsSection.items.filter(function(i){ return i.type === 'skill'; }).length;
+    var expItems = SECTIONS.filter(function(s){ return s.id === 'experience'; })[0].items;
+    var currentExp = expItems[0];
+    var projCount = SECTIONS.filter(function(s){ return s.id === 'projects'; })[0].items.length;
 
     return (
-      '<div class="sec-header">'+frontMastheadHtml()+'</div>' +
-      '<div class="item">' +
-        '<p class="body-text">'+esc(bioItem.text)+'</p>' +
-        '<p class="meta">Currently '+esc(currentExp.role)+' at '+esc(currentExp.company)+' · '+esc(eduItem.degree)+', '+esc(eduItem.school)+'</p>' +
-      '</div>'
+      '<div class="col-wrap"><div class="col">' +
+        '<div class="sec-header">'+frontMastheadHtml()+'</div>' +
+        '<div class="item">' +
+          '<p class="body-text">'+esc(BIO_TEXT)+'</p>' +
+          '<p class="meta">Currently '+esc(currentExp.role)+' at '+esc(currentExp.company)+' · '+esc(eduItem.degree)+', '+esc(eduItem.school)+'</p>' +
+        '</div>' +
+        '<div class="dateline" style="margin-top:26px;padding-top:22px;border-top:1px solid var(--rule);">' +
+          '<div class="field"><b>'+expItems.length+'</b>Professional roles</div>' +
+          '<div class="field"><b>'+projCount+'</b>Projects shipped</div>' +
+          '<div class="field"><b>'+skillGroupCount+'</b>Skill areas</div>' +
+          '<div class="field"><b>'+certCount+'</b>Certificates</div>' +
+        '</div>' +
+      '</div></div>'
     );
   }
 
@@ -553,6 +587,33 @@
     );
   }
 
+  function renderSkillsPage(){
+    var section = SECTIONS.filter(function(s){ return s.id === 'skills'; })[0];
+    var eduIdx = -1, skillIdxs = [], certIdxs = [];
+    section.items.forEach(function(item, idx){
+      if (item.type === 'education') eduIdx = idx;
+      else if (item.type === 'skill') skillIdxs.push(idx);
+      else if (item.type === 'certificate') certIdxs.push(idx);
+    });
+
+    var eduHtml = eduIdx > -1 ? itemBlockHtml('skills', eduIdx, section.items[eduIdx], { lead:true }) : '';
+    var skillsHtml = skillIdxs.map(function(idx){ return itemBlockHtml('skills', idx, section.items[idx], {}); }).join('');
+    var certsHtml = certIdxs.map(function(idx){ return itemBlockHtml('skills', idx, section.items[idx], {}); }).join('');
+
+    return (
+      sectionHeaderHtml(section, true) +
+      '<div class="split-groups">' +
+        '<div class="half">' +
+          '<h3 class="group-title">Education</h3>' + eduHtml +
+          '<h3 class="group-title">Skills</h3>' + skillsHtml +
+        '</div>' +
+        '<div class="half">' +
+          '<h3 class="group-title">Certificates</h3>' + certsHtml +
+        '</div>' +
+      '</div>'
+    );
+  }
+
   function renderSectionPage(p){
     var section = p.section;
     // Continuation text uses the true previous/next global page numbers.
@@ -583,6 +644,7 @@
   function renderPage(p){
     if (p.type === 'front') return renderFrontPage();
     if (p.type === 'back') return renderBackPage();
+    if (p.sectionId === 'skills') return renderSkillsPage();
     return renderSectionPage(p);
   }
 
@@ -635,7 +697,7 @@
   function navRows(){
     var rows = [];
     rows.push({ label:'Front page', page: 1, sec:null });
-    ['about','experience','work','contact'].forEach(function(id){
+    ['skills','experience','projects','contact'].forEach(function(id){
       var sec = SECTIONS.filter(function(s){return s.id===id;})[0];
       rows.push({ label:sec.name, page:SECTION_START[id], sec:id });
     });
