@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="paper">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Suraj Yadav — Developer and Analyst</title>
+<meta name="description" content="Suraj Yadav — Developer and Analyst. Portfolio covering profile, skills, experience, projects and certificates.">
+<meta name="theme-color" content="#8C3527">
+<meta property="og:title" content="Suraj Yadav — Developer and Analyst">
+<meta property="og:description" content="Portfolio covering profile, skills, experience, projects and certificates.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Suraj Yadav — Developer and Analyst">
+<meta name="twitter:description" content="Portfolio covering profile, skills, experience, projects and certificates.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23F1ECDC'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%238C3527' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root, [data-theme="paper"]{
+    --bg:#F1ECDC; --text:#2A2419; --text-dim:#6b5f49; --rule:#D9CFB3;
+    --accent:#8C3527; --link:#7A2E1E; --slot-shadow: rgba(42,36,25,0.18);
+  }
+  [data-theme="white"]{
+    --bg:#FFFFFF; --text:#1B1B1B; --text-dim:#63636b; --rule:#E3E3E3;
+    --accent:#8C3527; --link:#7A2E1E; --slot-shadow: rgba(0,0,0,0.12);
+  }
+  [data-theme="sepia"]{
+    --bg:#E7D9B8; --text:#3A2E1D; --text-dim:#6b5c42; --rule:#C8B78D;
+    --accent:#732A1D; --link:#5f2216; --slot-shadow: rgba(58,46,29,0.22);
+  }
+  [data-theme="night"]{
+    --bg:#18150F; --text:#E9E1CD; --text-dim:#a89e86; --rule:#372F22;
+    --accent:#C9A34E; --link:#C9A34E; --slot-shadow: rgba(0,0,0,0.5);
+  }
+
+  *{ box-sizing:border-box; }
+  html,body{ height:100%; margin:0; overscroll-behavior:none; }
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Lora', Georgia, 'Times New Roman', serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  h1,h2,h3,.headline,.masthead{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; }
+  a{ color:var(--link); }
+  button{ font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible{
+    outline: 2px solid var(--accent); outline-offset: 2px;
+  }
+
+  #appShell{ position:fixed; inset:0; display:flex; flex-direction:column; }
+
+  /* ---- Top bar ---- */
+  #topBar{
+    flex:0 0 52px; display:flex; align-items:center; gap:12px;
+    padding:0 16px; border-bottom:1px solid var(--rule);
+  }
+  #colorBtn{
+    width:30px; height:30px; border-radius:50%; flex:0 0 auto;
+    border:1px solid var(--rule);
+    background: conic-gradient(from 180deg, #F1ECDC 0 25%, #FFFFFF 25% 50%, #E7D9B8 50% 75%, #18150F 75% 100%);
+    position:relative;
+  }
+  #sectionBtn{
+    flex:1 1 auto; text-align:left; font-size:17px; letter-spacing:0.2px;
+    padding:6px 4px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  #sectionBtn:active{ opacity:0.7; }
+
+  /* ---- Body: rail + stage ---- */
+  #appBody{ flex:1 1 auto; display:flex; min-height:0; }
+  #rail{
+    display:none; flex:0 0 230px; border-right:1px solid var(--rule);
+    padding:24px 18px; overflow-y:auto;
+  }
+  @media (min-width:900px){ #rail{ display:block; } }
+  #rail .railName{
+    font-family:'Fraunces', serif; font-weight:600; font-size:20px; margin:0 0 18px 0;
+  }
+  #rail ul{ list-style:none; margin:0; padding:0; }
+  #rail li{ margin-bottom:2px; }
+  #rail button{
+    display:block; width:100%; text-align:left; padding:8px 6px; font-size:15px;
+    color:var(--text-dim); border-radius:3px;
+  }
+  #rail button.active{ color:var(--text); font-weight:600; }
+  #rail button:hover{ color:var(--text); }
+
+  #stage{ flex:1 1 auto; position:relative; overflow:hidden; perspective:1800px; min-width:0; }
+  .slot{
+    position:absolute; inset:0; padding:30px 22px; overflow:hidden;
+    backface-visibility:hidden; transform-style:preserve-3d; will-change:transform;
+    background:var(--bg);
+  }
+
+  .col-wrap{ display:flex; gap:36px; }
+  @media (min-width:900px){ .col-wrap{ max-width:880px; margin:0 auto; } }
+  .col{ flex:1 1 0; min-width:0; }
+
+  /* ---- Content typography ----
+     Sizes read through var(--fit-scale), which fitSlotContent() nudges down
+     from 1 only if a section's content doesn't fit its single page. */
+  .sec-title{
+    font-size:calc(22px * var(--fit-scale,1)); font-weight:600;
+    margin:0 0 calc(14px * var(--fit-scale,1)) 0; padding-bottom:calc(10px * var(--fit-scale,1));
+    border-bottom:2px solid var(--accent); display:inline-block;
+  }
+  .sec-note{ font-size:calc(15px * var(--fit-scale,1)); color:var(--text-dim); margin:calc(8px * var(--fit-scale,1)) 0 calc(16px * var(--fit-scale,1)) 0; font-style:italic; }
+  .cont-from{ font-size:14px; color:var(--text-dim); margin:0 0 16px 0; font-style:italic; }
+  .cont-note{ font-size:14px; color:var(--text-dim); margin-top:16px; }
+
+  .item{ margin-bottom:calc(26px * var(--fit-scale,1)); }
+  .item:last-child{ margin-bottom:0; }
+  .item.indexrow{ margin-bottom:0; }
+  button.index-row{ display:flex; }
+  .item.lead .headline{ font-size:calc(26px * var(--fit-scale,1)); line-height:1.25; }
+  .headline{
+    font-size:calc(19px * var(--fit-scale,1)); font-weight:500; line-height:1.35; margin:0 0 calc(6px * var(--fit-scale,1)) 0;
+  }
+  button.headline, a.headline{ display:block; text-align:left; text-decoration:none; }
+  button.headline:active, a.headline:active{ opacity:0.7; }
+  .dek{ font-size:calc(16px * var(--fit-scale,1)); color:var(--text-dim); margin:0 0 calc(6px * var(--fit-scale,1)) 0; line-height:1.5; }
+  .meta{ font-size:calc(14px * var(--fit-scale,1)); color:var(--text-dim); margin:0; }
+  .meta a{ text-decoration:underline; }
+  .body-text{ font-size:calc(18px * var(--fit-scale,1)); line-height:1.6; margin:0 0 calc(6px * var(--fit-scale,1)) 0; }
+  .tag{ font-size:14px; color:var(--accent); font-style:italic; }
+
+  .masthead{
+    font-size:44px; font-weight:900; text-align:center; margin:6px 0 4px 0; letter-spacing:0.5px;
+  }
+  .masthead-rule{ height:3px; background:var(--accent); margin:0 0 14px 0; }
+  .dateline{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:22px;
+    font-size:14px; color:var(--text-dim); margin-bottom:16px; text-align:center;
+  }
+  .dateline .field b{ display:block; color:var(--text); font-weight:600; font-size:15px; }
+  .stage-banner{
+    font-size:14px; color:var(--text-dim); text-align:center; margin:0 0 20px 0;
+    padding:10px 14px; border:1px solid var(--rule); border-radius:2px;
+  }
+  .index-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:9px 0; border-bottom:1px solid var(--rule); font-size:16px;
+    width:100%; text-align:left;
+  }
+  .index-row:last-child{ border-bottom:none; }
+  .index-row .pg{ color:var(--text-dim); font-size:14px; flex:0 0 auto; margin-left:12px; }
+
+  /* ---- Folio bar ---- */
+  #folio{
+    flex:0 0 42px; display:flex; align-items:center; border-top:1px solid var(--rule);
+    padding:0 6px;
+  }
+  #folio .navBtn{ flex:0 0 44px; height:100%; font-size:20px; }
+  #folio .navBtn:disabled{ opacity:0.25; }
+  #folio .folioText{
+    flex:1 1 auto; text-align:center; font-size:12.5px; color:var(--text-dim);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+
+  /* ---- Overlays ---- */
+  .overlay{
+    position:fixed; inset:0; background:var(--bg); z-index:50; display:none;
+    flex-direction:column;
+  }
+  .overlay.open{ display:flex; }
+  .overlay-head{
+    flex:0 0 56px; display:flex; align-items:center; justify-content:space-between;
+    padding:0 18px; border-bottom:1px solid var(--rule);
+  }
+  .overlay-head h2{ font-size:20px; margin:0; font-weight:600; }
+  .overlay-body{ flex:1 1 auto; overflow-y:auto; padding:10px 20px 30px; max-width:640px; width:100%; margin:0 auto; }
+  .overlay-body button{
+    display:flex; width:100%; justify-content:space-between; text-align:left;
+    padding:14px 2px; border-bottom:1px solid var(--rule); font-size:17px;
+  }
+  .overlay-body .pg{ color:var(--text-dim); font-size:14px; }
+  .closeBtn{ font-size:16px; padding:6px 8px; }
+
+  #colorPop{
+    position:fixed; top:56px; left:12px; z-index:60; display:none;
+    background:var(--bg); border:1px solid var(--rule); border-radius:8px;
+    padding:8px; box-shadow:0 6px 18px var(--slot-shadow);
+  }
+  #colorPop.open{ display:block; }
+  #colorPop button{
+    display:flex; align-items:center; gap:10px; width:180px; padding:9px 8px;
+    font-size:15px; border-radius:4px;
+  }
+  #colorPop button:hover{ background:var(--rule); }
+  .swatch{ width:18px; height:18px; border-radius:50%; border:1px solid var(--rule); flex:0 0 auto; }
+
+  @media (prefers-reduced-motion: reduce){
+    .slot{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div id="appShell">
+  <div id="topBar">
+    <button id="colorBtn" aria-label="Change page colour" title="Page colour"></button>
+    <button id="sectionBtn" aria-label="Open contents">Front page</button>
+  </div>
+
+  <div id="appBody">
+    <nav id="rail" aria-label="Sections">
+      <p class="railName">Suraj Yadav</p>
+      <ul id="railList"></ul>
+    </nav>
+    <div id="stage">
+      <div class="slot" id="slotA"></div>
+      <div class="slot" id="slotB" style="display:none;"></div>
+    </div>
+  </div>
+
+  <div id="folio">
+    <button class="navBtn" id="prevBtn" aria-label="Previous page">‹</button>
+    <div class="folioText" id="folioText"></div>
+    <button class="navBtn" id="nextBtn" aria-label="Next page">›</button>
+  </div>
+</div>
+
+<div class="overlay" id="tocOverlay">
+  <div class="overlay-head">
+    <h2>Contents</h2>
+    <button class="closeBtn" id="tocClose">Close</button>
+  </div>
+  <div class="overlay-body" id="tocBody"></div>
+</div>
+
+<div id="colorPop">
+  <button data-theme-choice="paper"><span class="swatch" style="background:#F1ECDC"></span>Paper</button>
+  <button data-theme-choice="white"><span class="swatch" style="background:#FFFFFF"></span>White</button>
+  <button data-theme-choice="sepia"><span class="swatch" style="background:#E7D9B8"></span>Sepia</button>
+  <button data-theme-choice="night"><span class="swatch" style="background:#18150F"></span>Night</button>
+</div>
+
+<div id="measureRoot" style="position:fixed; left:-9999px; top:0; visibility:hidden;"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     0. PORTFOLIO SETUP — content drawn from Suraj Yadav's résumé.
+     ========================================================= */
+  var PAPER_NAME = "Suraj Yadav";
+  var ROLE = "Developer and Analyst";
+  var LOCATION = "Indore, India";
+  var EMAIL = "me@surajyadav.dev";
+  var PHONE_DISPLAY = "+91 8085546767";
+  var PHONE_TEL = "+918085546767";
+  var GITHUB_URL = "https://github.com/1608Suraj";
+  var LINKEDIN_URL = "https://linkedin.com/in/me-surajyadav-dev";
+
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+    });
+  }
+
+  /* ---- Section content ---- */
+
+  var SECTIONS = [
+    {
+      id: 'about', name: 'Profile & Skills', kind: 'about',
+      items: [
+        { type:'bio', text:'Developer and Analyst with hands-on experience in application support, data analysis, and backend automation. Skilled in diagnosing and resolving issues across Python-based systems, with working knowledge of Flask/FastAPI, SQL, and API testing and debugging tools. Comfortable collaborating with cross-functional teams to troubleshoot, document, and resolve production issues quickly.' },
+        { type:'education', degree:'Bachelor of Computer Science (BCS)', school:'DAVV University, Indore', years:'2023 – 2027', cgpa:'CGPA: 7.0' },
+        { type:'skill', category:'Programming languages', list:'Python, Java' },
+        { type:'skill', category:'Web frameworks', list:'Flask, FastAPI' },
+        { type:'skill', category:'Databases', list:'MySQL, PostgreSQL, MongoDB' },
+        { type:'skill', category:'Data & ML libraries', list:'Pandas, Matplotlib, Scikit-learn, Seaborn' },
+        { type:'skill', category:'Debugging & support tools', list:'Python pdb, VS Code Debugger, Postman (API testing), Jira' },
+        { type:'skill', category:'Tools & platforms', list:'Git, GitHub, VS Code, GCP, Groq, Docker (basic), Linux' }
+      ]
+    },
+    {
+      id: 'experience', name: 'Experience', kind: 'experience',
+      items: [
+        { role:'TSP Analyst (Internship)', company:'DronaMap', dates:'Jan 2026 – Present', bullets:[
+          'Investigate and troubleshoot data issues across project systems, identifying root causes and recommending practical, workable fixes.',
+          'Analyse and process data to support ongoing project operations and reporting.',
+          'Use Python and Excel to keep project data clean, organised, and up to date.'
+        ]},
+        { role:'Data Analyst', company:'Bizfy Solutions', dates:'Feb 2025 – Jan 2026', bullets:[
+          'Cleaned and analysed business data using Python and SQL to support decisions.',
+          'Built reports and dashboards that made data easy to understand for the team.',
+          'Worked closely with team members to turn raw data into clear, useful insights.'
+        ]}
+      ]
+    },
+    {
+      id: 'work', name: 'Projects & Certificates', kind: 'work',
+      items: [
+        { type:'project', name:'Healthcare Assistant', summary:'A Python-based healthcare assistant app built with Streamlit for easy user interaction — helping people get quick, simple health-related information through a clean web interface.', tag:'Deployed online, accessible directly from a browser.', linkLabel:'Open the live app', linkUrl:'https://healthcare-assist-o.streamlit.app' },
+        { type:'project', name:'Employee Management System', summary:'A system to manage employee records — add, update and search — built with Python and Streamlit for a simple, user-friendly interface.', tag:'Designed to cut down manual work in tracking employee data.', linkLabel:'Open the live app', linkUrl:'https://employee-mangmnt.streamlit.app' },
+        { type:'project', name:'Virat Kohli Score Analytics', summary:'An analysis of Virat Kohli\u2019s cricket performance data using Python and Pandas, with Matplotlib visualisations showing scoring trends and patterns.', tag:'Organised on GitHub with a clear, reusable code structure.', linkLabel:'View on GitHub', linkUrl:'https://github.com/1608Suraj/Viratkohli_Analytics' },
+        { type:'certificate', firstOfGroup:true, title:'Design, Develop, and Deploy Multi-Agent Systems with CrewAI', issuer:'DeepLearning.AI', link:'https://learn.deeplearning.ai/certificates/496d3b01-a25f-4acd-a522-286f47effe34' },
+        { type:'certificate', title:'Build & Deploy Apps with Google AI Studio & Multilingual AI Speech App', issuer:'GUVI', link:'https://www.guvi.in/verify-certificate.html?id=12yp0FE3S79918m970&course=buildingdeployingapplicationswithgoogleaistudio' },
+        { type:'certificate', title:'Fast Prototyping of GenAI Apps with Streamlit', issuer:'DeepLearning.AI', link:'https://learn.deeplearning.ai/certificates/9c92bafa-e4bd-42eb-bcbd-cea7c215bfc3' },
+        { type:'certificate', title:'Deloitte Australia Data Analytics Job Simulation', issuer:'Forage', note:'March 2026', link:'https://drive.google.com/file/d/1nwaaauXrl4MUrkA-c0nuFYKBDyih3G7S/view?usp=drivesdk' }
+      ]
+    },
+    {
+      id: 'contact', name: 'Get in touch', kind: 'contact',
+      note: 'Open to opportunities in Python development and data analysis.',
+      items: [
+        { label:'Email', value:EMAIL, href:'mailto:'+EMAIL },
+        { label:'Phone', value:PHONE_DISPLAY, href:'tel:'+PHONE_TEL },
+        { label:'Location', value:LOCATION, href:null },
+        { label:'LinkedIn', value:'linkedin.com/in/me-surajyadav-dev', href:LINKEDIN_URL },
+        { label:'GitHub', value:'github.com/1608Suraj', href:GITHUB_URL }
+      ]
+    }
+  ];
+
+  var COLOPHON = [
+    { name:'Design', status:'Built as a paged reader — real height-measured pagination, a CSS 3D page-turn, four ink themes, and keyboard, swipe and tap navigation. No page ever scrolls.' },
+    { name:'Stack', status:'Vanilla HTML, CSS and JavaScript. No framework, no build step, one file.' },
+    { name:'Content', status:'Pulled from my r\u00e9sum\u00e9 — profile, skills, experience, projects and certificates.' }
+  ];
+
+  /* =========================================================
+     1. RENDERING — turn each item into an HTML "block" string.
+        Every block is atomic: pagination will never split one
+        across pages or strand its link away from its text.
+     ========================================================= */
+
+  function itemBlockHtml(sectionId, idx, item, opts){
+    opts = opts || {};
+    var cls = 'item' + (opts.lead ? ' lead' : '') + (item && item.type==='indexrow' ? ' indexrow' : '');
+    var parts = [];
+    parts.push('<div class="'+cls+'" data-sec="'+sectionId+'" data-idx="'+idx+'">');
+
+    if (sectionId === 'about'){
+      if (item.type === 'bio'){
+        parts.push('<p class="body-text">'+esc(item.text)+'</p>');
+      } else if (item.type === 'education'){
+        parts.push('<p class="headline">'+esc(item.degree)+'</p>');
+        parts.push('<p class="dek">'+esc(item.school)+'</p>');
+        parts.push('<p class="meta">'+esc(item.years)+' · '+esc(item.cgpa)+'</p>');
+      } else if (item.type === 'skill'){
+        parts.push('<p class="headline">'+esc(item.category)+'</p>');
+        parts.push('<p class="body-text">'+esc(item.list)+'</p>');
+      }
+    } else if (sectionId === 'experience'){
+      parts.push('<p class="headline">'+esc(item.role)+' — '+esc(item.company)+'</p>');
+      parts.push('<p class="meta">'+esc(item.dates)+'</p>');
+      item.bullets.forEach(function(b){
+        parts.push('<p class="body-text">\u2022 '+esc(b)+'</p>');
+      });
+    } else if (sectionId === 'work'){
+      if (item.type === 'project'){
+        parts.push('<a href="'+esc(item.linkUrl)+'" target="_blank" rel="noopener noreferrer" class="headline tappable">'+esc(item.name)+'</a>');
+        parts.push('<p class="body-text">'+esc(item.summary)+'</p>');
+        parts.push('<p class="dek">'+esc(item.tag)+'</p>');
+        parts.push('<p class="meta"><a href="'+esc(item.linkUrl)+'" target="_blank" rel="noopener noreferrer">'+esc(item.linkLabel)+'</a></p>');
+      } else if (item.type === 'certificate'){
+        if (item.firstOfGroup) parts.push('<p class="sec-note" style="margin:0 0 10px 0;">Certificates</p>');
+        parts.push('<a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer" class="headline tappable">'+esc(item.title)+'</a>');
+        parts.push('<p class="meta">'+esc(item.issuer)+(item.note ? ' · '+esc(item.note) : '')+'</p>');
+        parts.push('<p class="meta"><a href="'+esc(item.link)+'" target="_blank" rel="noopener noreferrer">View certificate</a></p>');
+      }
+    } else if (sectionId === 'contact'){
+      if (item.href){
+        var isExternal = item.href.indexOf('http') === 0;
+        parts.push('<a href="'+esc(item.href)+'"'+(isExternal ? ' target="_blank" rel="noopener noreferrer"' : '')+' class="headline tappable">'+esc(item.value)+'</a>');
+      } else {
+        parts.push('<p class="headline">'+esc(item.value)+'</p>');
+      }
+      parts.push('<p class="dek">'+esc(item.label)+'</p>');
+    }
+    parts.push('</div>');
+    return parts.join('');
+  }
+
+  function frontMastheadHtml(){
+    return (
+      '<div class="masthead">'+esc(PAPER_NAME)+'</div>' +
+      '<div class="masthead-rule"></div>' +
+      '<div class="dateline">' +
+        '<div class="field"><b>'+esc(ROLE)+'</b>Role</div>' +
+        '<div class="field"><b>'+esc(LOCATION)+'</b>Based in</div>' +
+        '<div class="field"><b><a href="mailto:'+esc(EMAIL)+'">'+esc(EMAIL)+'</a></b>Email</div>' +
+        '<div class="field"><b><a href="'+esc(GITHUB_URL)+'" target="_blank" rel="noopener noreferrer">GitHub</a> · <a href="'+esc(LINKEDIN_URL)+'" target="_blank" rel="noopener noreferrer">LinkedIn</a></b>Find me online</div>' +
+      '</div>' +
+      '<div class="stage-banner">Developer and Analyst — application support, data analysis and backend automation.</div>'
+    );
+  }
+
+  function sectionHeaderHtml(section, isFirstPage){
+    var html = '<h2 class="sec-title">'+esc(section.name)+'</h2>';
+    if (isFirstPage && section.note){
+      html += '<p class="sec-note">'+esc(section.note)+'</p>';
+    }
+    return '<div class="sec-header">'+html+'</div>';
+  }
+
+  function renderFrontPage(){
+    var about = SECTIONS.filter(function(s){ return s.id === 'about'; })[0];
+    var bioItem = about.items.filter(function(i){ return i.type === 'bio'; })[0];
+    var eduItem = about.items.filter(function(i){ return i.type === 'education'; })[0];
+    var currentExp = SECTIONS.filter(function(s){ return s.id === 'experience'; })[0].items[0];
+
+    return (
+      '<div class="sec-header">'+frontMastheadHtml()+'</div>' +
+      '<div class="item">' +
+        '<p class="body-text">'+esc(bioItem.text)+'</p>' +
+        '<p class="meta">Currently '+esc(currentExp.role)+' at '+esc(currentExp.company)+' · '+esc(eduItem.degree)+', '+esc(eduItem.school)+'</p>' +
+      '</div>'
+    );
+  }
+
+  var CONT_FROM_TPL = '<p class="cont-from">(continued from page {N})</p>';
+  var CONT_NOTE_TPL = '<p class="cont-note">Continued on page {N} \u2192</p>';
+
+  /* =========================================================
+     2. PAGINATION ENGINE
+     ========================================================= */
+
+  var measureRoot = document.getElementById('measureRoot');
+  var stageEl = document.getElementById('stage');
+  var SLOT_PAD_X = 22, SLOT_PAD_Y = 30, COL_GAP = 36, WIDE_MAX = 880;
+
+  function isWide(){ return window.matchMedia('(min-width:900px)').matches; }
+
+  function stageContentBox(){
+    var rect = stageEl.getBoundingClientRect();
+    var wide = isWide();
+    var innerWidth = wide ? Math.min(rect.width, WIDE_MAX) : rect.width;
+    var numCols = wide ? 2 : 1;
+    var width = innerWidth - (SLOT_PAD_X*2);
+    var colWidth = numCols === 2 ? (width - COL_GAP)/2 : width;
+    var height = rect.height - (SLOT_PAD_Y*2);
+    return { colWidth: colWidth, height: height, numCols: numCols };
+  }
+
+  function measureHeights(htmlArray, colWidth){
+    measureRoot.style.width = colWidth + 'px';
+    measureRoot.innerHTML = '';
+    var probe = document.createElement('div');
+    probe.className = 'col';
+    probe.style.width = colWidth + 'px';
+    measureRoot.appendChild(probe);
+    return htmlArray.map(function(html){
+      probe.innerHTML = html;
+      return probe.scrollHeight;
+    });
+  }
+
+  function packColumns(itemHeights, pageHeight, numColumns){
+    var pages = [];
+    var colHeights = new Array(numColumns).fill(0);
+    var colItems = [];
+    for (var c=0;c<numColumns;c++) colItems.push([]);
+    var i = 0, guard = 0;
+    while (i < itemHeights.length){
+      guard++; if (guard > 200000) break;
+      var colIdx = 0;
+      for (var c2=1;c2<numColumns;c2++) if (colHeights[c2] < colHeights[colIdx]) colIdx = c2;
+      var h = itemHeights[i];
+      if (colHeights[colIdx] + h <= pageHeight || colHeights[colIdx] === 0){
+        colItems[colIdx].push(i); colHeights[colIdx]+=h; i++; continue;
+      }
+      var placed = false;
+      for (var c3=0;c3<numColumns;c3++){
+        if (colHeights[c3] + h <= pageHeight){ colItems[c3].push(i); colHeights[c3]+=h; i++; placed=true; break; }
+      }
+      if (!placed){
+        pages.push({columns: colItems});
+        colHeights = new Array(numColumns).fill(0);
+        colItems = [];
+        for (var c4=0;c4<numColumns;c4++) colItems.push([]);
+      }
+    }
+    if (colItems.some(function(c){return c.length>0;})) pages.push({columns: colItems});
+    if (pages.length === 0) pages.push({columns: colItems});
+    return pages;
+  }
+
+  // Global page list, built fresh on every (re)pagination pass.
+  var PAGES = [];        // flat ordered list of page model objects
+  var SECTION_START = {}; // sectionId -> global page number (1-based)
+  var BACK_PAGE_NUM = null;
+
+  function paginateAll(){
+    var box = stageContentBox();
+
+    // Every section is exactly one page: on a single column everything just
+    // flows in order; on two columns, heights are measured only to balance
+    // the two columns evenly. Content never continues onto a second page —
+    // fitSlotContent() (below) shrinks text slightly instead, as a last resort.
+    function layoutSectionOnePage(section){
+      var blocks = section.items.map(function(item, idx){
+        return itemBlockHtml(section.id, idx, item, {});
+      });
+      var columns;
+      if (box.numCols === 1){
+        columns = [ blocks.map(function(_, i){ return i; }) ];
+      } else {
+        var heights = measureHeights(blocks, box.colWidth);
+        columns = packColumns(heights, Infinity, box.numCols)[0].columns;
+      }
+      return {
+        type:'section',
+        sectionId: section.id,
+        section: section,
+        subIndex: 0,
+        subCount: 1,
+        columns: columns
+      };
+    }
+
+    var pages = [];
+    pages.push({ type:'front' });
+    SECTIONS.forEach(function(section){
+      pages.push(layoutSectionOnePage(section));
+    });
+    pages.push({ type:'back' });
+
+    // Assign global numbers + lookup map
+    var startMap = {};
+    var backNum = null;
+    pages.forEach(function(p, i){
+      p.pageNumber = i+1;
+      if (p.type === 'section') startMap[p.sectionId] = p.pageNumber;
+      if (p.type === 'back') backNum = p.pageNumber;
+    });
+
+    PAGES = pages;
+    SECTION_START = startMap;
+    BACK_PAGE_NUM = backNum;
+  }
+
+  /* =========================================================
+     3. PAGE RENDERERS  (produce the innerHTML for one slot)
+     ========================================================= */
+
+  function renderBackPage(){
+    var rows = COLOPHON.map(function(s){
+      return '<div class="item"><p class="headline" style="font-size:17px;">'+esc(s.name)+'</p><p class="dek">'+esc(s.status)+'</p></div>';
+    }).join('');
+    return (
+      '<div class="sec-header"><h2 class="sec-title">Back page — colophon</h2></div>' +
+      '<div class="col-wrap"><div class="col">' +
+        '<h3 style="font-size:16px;margin:0 0 10px;">About this page</h3>' + rows +
+      '</div><div class="col">' +
+        '<h3 style="font-size:16px;margin:0 0 10px;">Let\u2019s connect</h3>' +
+        '<div class="item"><p class="body-text">Open to Python development and data analysis roles. Reach out at <a href="mailto:'+esc(EMAIL)+'">'+esc(EMAIL)+'</a> or see more of my work on <a href="'+esc(GITHUB_URL)+'" target="_blank" rel="noopener noreferrer">GitHub</a>.</p></div>' +
+      '</div></div>'
+    );
+  }
+
+  function renderSectionPage(p){
+    var section = p.section;
+    // Continuation text uses the true previous/next global page numbers.
+    var prevPageNum = null, nextPageNum = null;
+    var idxInPages = PAGES.indexOf(p);
+    if (p.subIndex > 0) prevPageNum = PAGES[idxInPages-1].pageNumber;
+    if (p.subIndex < p.subCount-1) nextPageNum = PAGES[idxInPages+1].pageNumber;
+
+    var html = sectionHeaderHtml(section, p.subIndex === 0);
+    if (prevPageNum) html += CONT_FROM_TPL.replace('{N}', prevPageNum);
+
+    html += '<div class="col-wrap">';
+    p.columns.forEach(function(colIndices){
+      html += '<div class="col">';
+      colIndices.forEach(function(itemIdx, pos){
+        var item = section.items[itemIdx];
+        var isLead = (p.subIndex===0 && itemIdx===0);
+        html += itemBlockHtml(section.id, itemIdx, item, { lead:isLead });
+      });
+      html += '</div>';
+    });
+    html += '</div>';
+
+    if (nextPageNum) html += CONT_NOTE_TPL.replace('{N}', nextPageNum);
+    return html;
+  }
+
+  function renderPage(p){
+    if (p.type === 'front') return renderFrontPage();
+    if (p.type === 'back') return renderBackPage();
+    return renderSectionPage(p);
+  }
+
+  function sectionNameForPage(p){
+    if (p.type==='front') return 'Front page';
+    if (p.type==='back') return 'Back page';
+    return p.section.name;
+  }
+
+  /* =========================================================
+     4. NAVIGATION + PAGE-TURN ANIMATION
+     ========================================================= */
+
+  var slotA = document.getElementById('slotA');
+  var slotB = document.getElementById('slotB');
+  var frontSlotName = 'A';
+  var currentPageIndex = 0;
+  var isAnimating = false;
+  var currentRef = { special:'front' };
+  var reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var sectionBtn = document.getElementById('sectionBtn');
+  var folioText = document.getElementById('folioText');
+  var prevBtn = document.getElementById('prevBtn');
+  var nextBtn = document.getElementById('nextBtn');
+  var railList = document.getElementById('railList');
+  var tocBody = document.getElementById('tocBody');
+
+  function currentSlotEl(){ return frontSlotName==='A' ? slotA : slotB; }
+  function otherSlotEl(){ return frontSlotName==='A' ? slotB : slotA; }
+
+  function updateChrome(){
+    var p = PAGES[currentPageIndex];
+    var name = sectionNameForPage(p);
+    sectionBtn.textContent = name;
+    folioText.textContent = PAPER_NAME + ' · ' + ROLE + ' · Page ' + p.pageNumber + ' of ' + PAGES.length;
+    prevBtn.disabled = currentPageIndex === 0;
+    nextBtn.disabled = currentPageIndex === PAGES.length - 1;
+
+    if (p.type==='section') currentRef = { section:p.sectionId };
+    else currentRef = { special: p.type };
+
+    // rail active state
+    var railBtns = railList.querySelectorAll('button');
+    railBtns.forEach(function(b){
+      b.classList.toggle('active', b.getAttribute('data-page') === String(p.pageNumber) ? true : (b.getAttribute('data-sec') && p.type==='section' && b.getAttribute('data-sec')===p.sectionId));
+    });
+  }
+
+  function navRows(){
+    var rows = [];
+    rows.push({ label:'Front page', page: 1, sec:null });
+    ['about','experience','work','contact'].forEach(function(id){
+      var sec = SECTIONS.filter(function(s){return s.id===id;})[0];
+      rows.push({ label:sec.name, page:SECTION_START[id], sec:id });
+    });
+    rows.push({ label:'Back page', page: BACK_PAGE_NUM, sec:null });
+    return rows;
+  }
+
+  function renderRail(){
+    railList.innerHTML = navRows().map(function(r){
+      return '<li><button data-nav="page" data-page="'+r.page+'"'+(r.sec?' data-sec="'+r.sec+'"':'')+'>'+esc(r.label)+'</button></li>';
+    }).join('');
+  }
+
+  function renderToc(){
+    tocBody.innerHTML = navRows().map(function(r){
+      return '<button data-nav="page" data-page="'+r.page+'"><span>'+esc(r.label)+'</span><span class="pg">Page '+r.page+'</span></button>';
+    }).join('');
+  }
+
+  function fitSlotContent(el){
+    el.style.removeProperty('--fit-scale');
+    var scale = 1, floor = 0.72, step = 0.04, tries = 12;
+    while (tries-- > 0){
+      if (el.scrollHeight <= el.clientHeight + 1) return;
+      if (scale <= floor) return;
+      scale = Math.max(floor, scale - step);
+      el.style.setProperty('--fit-scale', scale.toFixed(2));
+    }
+  }
+
+  function goToIndex(newIndex, instant){
+    if (newIndex < 0 || newIndex >= PAGES.length) return;
+    if (isAnimating) return;
+    if (newIndex === currentPageIndex && !instant) return;
+
+    var direction = newIndex > currentPageIndex ? 'next' : 'prev';
+    var incomingEl = otherSlotEl();
+    var outgoingEl = currentSlotEl();
+
+    incomingEl.innerHTML = renderPage(PAGES[newIndex]);
+    fitSlotContent(incomingEl);
+    incomingEl.style.display = 'block';
+    incomingEl.style.transform = 'rotateY(0deg)';
+    incomingEl.style.transformOrigin = '';
+    incomingEl.style.zIndex = '1';
+    outgoingEl.style.zIndex = '2';
+
+    currentPageIndex = newIndex;
+
+    if (instant || reducedMotion){
+      outgoingEl.style.display = 'none';
+      outgoingEl.style.transform = 'rotateY(0deg)';
+      frontSlotName = (frontSlotName==='A') ? 'B' : 'A';
+      updateChrome();
+      return;
+    }
+
+    isAnimating = true;
+    outgoingEl.style.transformOrigin = (direction==='next') ? 'right center' : 'left center';
+    var endAngle = (direction==='next') ? -180 : 180;
+
+    var anim = outgoingEl.animate(
+      [{ transform:'rotateY(0deg)' }, { transform:'rotateY('+endAngle+'deg)' }],
+      { duration:450, easing:'cubic-bezier(.45,0,.2,1)', fill:'forwards' }
+    );
+
+    var done = function(){
+      outgoingEl.style.display = 'none';
+      outgoingEl.style.transform = 'rotateY(0deg)';
+      try { anim.cancel(); } catch(e){}
+      frontSlotName = (frontSlotName==='A') ? 'B' : 'A';
+      isAnimating = false;
+      updateChrome();
+    };
+    if (anim && anim.finished && anim.finished.then) anim.finished.then(done, done);
+    else setTimeout(done, 460);
+  }
+
+  function goToPageNumber(n){ goToIndex(n-1, false); }
+
+  function next(){ goToIndex(currentPageIndex+1, false); }
+  function prev(){ goToIndex(currentPageIndex-1, false); }
+
+  /* ---- input: buttons, keyboard, swipe, quarter-tap ---- */
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  window.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown'){ next(); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ prev(); e.preventDefault(); }
+    else if (e.key === 'Escape'){ closeToc(); closeColorPop(); }
+  });
+
+  var touchStartX=0, touchStartY=0, suppressClickUntil=0;
+  stageEl.addEventListener('touchstart', function(e){
+    var t = e.changedTouches[0];
+    touchStartX = t.clientX; touchStartY = t.clientY;
+  }, {passive:true});
+  stageEl.addEventListener('touchend', function(e){
+    var t = e.changedTouches[0];
+    var dx = t.clientX - touchStartX, dy = t.clientY - touchStartY;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)*1.3){
+      if (dx < 0) next(); else prev();
+      suppressClickUntil = Date.now() + 350;
+    }
+  }, {passive:true});
+
+  stageEl.addEventListener('click', function(e){
+    if (Date.now() < suppressClickUntil) return;
+    var navTarget = e.target.closest('[data-nav="page"]');
+    if (navTarget){
+      e.preventDefault();
+      goToPageNumber(parseInt(navTarget.getAttribute('data-page'),10));
+      return;
+    }
+    var realLink = e.target.closest('a[href]');
+    if (realLink) return; // let the browser follow the real link (mailto, tel, https)
+    var rect = stageEl.getBoundingClientRect();
+    var relX = (e.clientX - rect.left) / rect.width;
+    if (relX < 0.25) prev();
+    else if (relX > 0.75) next();
+  });
+
+  /* ---- top bar / rail / TOC / colour ---- */
+
+  var tocOverlay = document.getElementById('tocOverlay');
+  document.getElementById('sectionBtn').addEventListener('click', openToc);
+  document.getElementById('tocClose').addEventListener('click', closeToc);
+  tocBody.addEventListener('click', function(e){
+    var b = e.target.closest('[data-nav="page"]');
+    if (b){ goToPageNumber(parseInt(b.getAttribute('data-page'),10)); closeToc(); }
+  });
+  function openToc(){ renderToc(); tocOverlay.classList.add('open'); }
+  function closeToc(){ tocOverlay.classList.remove('open'); }
+
+  railList.addEventListener('click', function(e){
+    var b = e.target.closest('button[data-nav="page"]');
+    if (b) goToPageNumber(parseInt(b.getAttribute('data-page'),10));
+  });
+
+  var colorPop = document.getElementById('colorPop');
+  document.getElementById('colorBtn').addEventListener('click', function(e){
+    e.stopPropagation();
+    colorPop.classList.toggle('open');
+  });
+  document.addEventListener('click', function(e){
+    if (!colorPop.contains(e.target) && e.target.id !== 'colorBtn') closeColorPop();
+  });
+  function closeColorPop(){ colorPop.classList.remove('open'); }
+
+  colorPop.querySelectorAll('[data-theme-choice]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var theme = btn.getAttribute('data-theme-choice');
+      document.documentElement.setAttribute('data-theme', theme);
+      try { localStorage.setItem('ledger-theme', theme); } catch(e){}
+      closeColorPop();
+    });
+  });
+
+  /* =========================================================
+     5. RESIZE HANDLING — repaginate, keep the reader's place
+     ========================================================= */
+
+  var resizeTimer = null;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(repaginateKeepingPlace, 180);
+  });
+  window.addEventListener('orientationchange', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(repaginateKeepingPlace, 180);
+  });
+
+  function repaginateKeepingPlace(){
+    paginateAll();
+    renderRail();
+    var targetIndex = 0;
+    if (currentRef.special){
+      for (var i=0;i<PAGES.length;i++){ if (PAGES[i].type===currentRef.special){ targetIndex=i; break; } }
+    } else if (currentRef.section){
+      for (var i=0;i<PAGES.length;i++){ if (PAGES[i].type==='section' && PAGES[i].sectionId===currentRef.section){ targetIndex=i; break; } }
+    }
+    currentPageIndex = Math.min(targetIndex, PAGES.length-1);
+    var el = currentSlotEl();
+    el.innerHTML = renderPage(PAGES[currentPageIndex]);
+    fitSlotContent(el);
+    updateChrome();
+  }
+
+  /* =========================================================
+     6. BOOT
+     ========================================================= */
+
+  function boot(){
+    var savedTheme = null;
+    try { savedTheme = localStorage.getItem('ledger-theme'); } catch(e){}
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+    paginateAll();
+    renderRail();
+    currentPageIndex = 0;
+    frontSlotName = 'A';
+    slotA.innerHTML = renderPage(PAGES[0]);
+    fitSlotContent(slotA);
+    slotA.style.display = 'block';
+    slotB.style.display = 'none';
+    updateChrome();
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+
+})();
+</script>
+</body>
+</html>
