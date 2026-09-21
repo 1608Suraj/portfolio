@@ -118,8 +118,21 @@
   .cont-from{ font-size:14px; color:var(--text-dim); margin:0 0 16px 0; font-style:italic; }
   .cont-note{ font-size:14px; color:var(--text-dim); margin-top:16px; }
 
-  .item{ margin-bottom:calc(12px * var(--fit-scale,1)); }
-  .item:last-child{ margin-bottom:0; }
+  .item { margin-bottom: clamp(4px, 1vh, 8px) !important; }
+.item:last-child { margin-bottom: 0; }
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(2px, 0.5vh, 4px) !important;
+  margin-top: 2px;
+}
+
+.skill-tag {
+  font-size: clamp(11px, 0.85rem, 13px) !important;
+  padding: 1px 6px !important;
+  line-height: 1.15 !important;
+}
   .item.indexrow{ margin-bottom:0; }
   button.index-row{ display:flex; }
   .item.lead .headline{ font-size:calc(26px * var(--fit-scale,1)); line-height:1.25; }
