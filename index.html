@@ -91,7 +91,9 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23F1ECDC'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%238C3527' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap"></noscript>
 <style>
   :root, [data-theme="paper"]{
     --bg:#F1ECDC; --text:#2A2419; --text-dim:#6b5f49; --rule:#D9CFB3;
@@ -913,13 +915,12 @@
 
   function fitSlotContent(el){
     el.style.removeProperty('--fit-scale');
-    var scale = 1, floor = 0.85, step = 0.04, tries = 12;
-    while (tries-- > 0){
-      if (el.scrollHeight <= el.clientHeight + 1) return;
-      if (scale <= floor) return;
-      scale = Math.max(floor, scale - step);
-      el.style.setProperty('--fit-scale', scale.toFixed(2));
-    }
+    var floor = 0.85;
+    var availableHeight = el.clientHeight;
+    var contentHeight = el.scrollHeight;
+    if (contentHeight <= availableHeight + 1) return;
+    var scale = Math.max(floor, Math.min(1, availableHeight / contentHeight));
+    if (scale < 1) el.style.setProperty('--fit-scale', scale.toFixed(2));
   }
 
   function goToIndex(newIndex, instant){
