@@ -91,7 +91,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23F1ECDC'/%3E%3Ctext x='32' y='43' font-family='Georgia,serif' font-size='26' font-weight='700' fill='%238C3527' text-anchor='middle'%3ESY%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap">
+<link rel="preload" as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap" media="print" onload="this.media='all'">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;900&family=Lora:ital,wght@0,400;1,400&display=swap"></noscript>
 <style>
@@ -112,14 +112,33 @@
     --accent:#C9A34E; --link:#C9A34E; --slot-shadow: rgba(0,0,0,0.5);
   }
 
+  @font-face{
+    font-family:'Lora Fallback';
+    src:local('Times New Roman');
+    font-display:swap;
+    size-adjust:104%;
+    ascent-override:90%;
+    descent-override:22%;
+    line-gap-override:0%;
+  }
+  @font-face{
+    font-family:'Fraunces Fallback';
+    src:local('Georgia');
+    font-display:swap;
+    size-adjust:98%;
+    ascent-override:92%;
+    descent-override:24%;
+    line-gap-override:0%;
+  }
+
   *{ box-sizing:border-box; }
   html,body{ height:100%; margin:0; overscroll-behavior:none; }
   body{
     background:var(--bg); color:var(--text);
-    font-family:'Lora', Georgia, 'Times New Roman', serif;
+    font-family:'Lora', 'Lora Fallback', Georgia, 'Times New Roman', serif;
     -webkit-tap-highlight-color: transparent;
   }
-  h1,h2,h3,.headline,.masthead{ font-family:'Fraunces', Georgia, 'Times New Roman', serif; }
+  h1,h2,h3,.headline,.masthead{ font-family:'Fraunces', 'Fraunces Fallback', Georgia, 'Times New Roman', serif; }
   a{ color:var(--link); }
   button{ font-family:inherit; color:inherit; background:none; border:none; cursor:pointer; }
   button:focus-visible, a:focus-visible, [tabindex]:focus-visible{
@@ -242,6 +261,9 @@
   }
   .index-row:last-child{ border-bottom:none; }
   .index-row .pg{ color:var(--text-dim); font-size:14px; flex:0 0 auto; margin-left:12px; }
+  @media (max-width:899px){
+    .hero-intro{ min-height:17lh; }
+  }
 
   /* ---- Folio bar ---- */
   #folio{
@@ -603,7 +625,7 @@
     return (
       '<div class="col-wrap"><div class="col">' +
         '<div class="sec-header">'+frontMastheadHtml()+'</div>' +
-        '<div class="item">' +
+        '<div class="item hero-intro">' +
           '<p class="body-text">'+esc(BIO_TEXT)+'</p>' +
           '<p class="meta">Currently '+esc(currentExp.role)+' at '+esc(currentExp.company)+' · '+esc(eduItem.degree)+', '+esc(eduItem.school)+'</p>' +
         '</div>' +
@@ -627,11 +649,21 @@
   var measureRoot = document.getElementById('measureRoot');
   var stageEl = document.getElementById('stage');
   var SLOT_PAD_X = 22, SLOT_PAD_Y = 16, COL_GAP = 36, WIDE_MAX = 880;
+  var cachedStageRect = null;
 
   function isWide(){ return window.matchMedia('(min-width:900px)').matches; }
 
+  function refreshStageRect(){
+    cachedStageRect = stageEl.getBoundingClientRect();
+    return cachedStageRect;
+  }
+
+  function getStageRect(){
+    return cachedStageRect || refreshStageRect();
+  }
+
   function stageContentBox(){
-    var rect = stageEl.getBoundingClientRect();
+    var rect = getStageRect();
     var wide = isWide();
     var innerWidth = wide ? Math.min(rect.width, WIDE_MAX) : rect.width;
     var numCols = wide ? 2 : 1;
@@ -914,13 +946,26 @@
   }
 
   function fitSlotContent(el){
-    el.style.removeProperty('--fit-scale');
     var floor = 0.85;
     var availableHeight = el.clientHeight;
-    var contentHeight = el.scrollHeight;
-    if (contentHeight <= availableHeight + 1) return;
+    var probe = document.createElement('div');
+    probe.className = 'slot';
+    probe.style.position = 'static';
+    probe.style.inset = 'auto';
+    probe.style.overflow = 'visible';
+    probe.style.width = el.clientWidth + 'px';
+    probe.style.setProperty('--fit-scale', '1');
+    probe.innerHTML = el.innerHTML;
+    measureRoot.innerHTML = '';
+    measureRoot.appendChild(probe);
+    var contentHeight = probe.scrollHeight;
+    if (contentHeight <= availableHeight + 1){
+      el.style.removeProperty('--fit-scale');
+      return;
+    }
     var scale = Math.max(floor, Math.min(1, availableHeight / contentHeight));
     if (scale < 1) el.style.setProperty('--fit-scale', scale.toFixed(2));
+    else el.style.removeProperty('--fit-scale');
   }
 
   function goToIndex(newIndex, instant){
@@ -1022,7 +1067,7 @@
     // Edge-tap page turns are a touch feature; on desktop they fight text selection.
     if (!window.matchMedia('(pointer: coarse)').matches) return;
     if (window.getSelection && String(window.getSelection())) return;
-    var rect = stageEl.getBoundingClientRect();
+    var rect = getStageRect();
     var relX = (e.clientX - rect.left) / rect.width;
     if (relX < 0.25) prev();
     else if (relX > 0.75) next();
@@ -1071,10 +1116,12 @@
 
   var resizeTimer = null;
   window.addEventListener('resize', function(){
+    refreshStageRect();
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(repaginateKeepingPlace, 180);
   });
   window.addEventListener('orientationchange', function(){
+    refreshStageRect();
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(repaginateKeepingPlace, 180);
   });
@@ -1105,16 +1152,25 @@
     if (!savedTheme && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) savedTheme = 'night';
     if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
 
-    paginateAll();
-    renderRail();
     var startIdx = indexFromHash(); if (startIdx < 0) startIdx = 0;
-    currentPageIndex = startIdx;
     frontSlotName = 'A';
-    slotA.innerHTML = renderPage(PAGES[startIdx]);
-    fitSlotContent(slotA);
     slotA.style.display = 'block';
     slotB.style.display = 'none';
-    updateChrome();
+
+    if (startIdx === 0){
+      slotA.innerHTML = renderFrontPage();
+      fitSlotContent(slotA);
+    }
+
+    requestAnimationFrame(function(){
+      refreshStageRect();
+      paginateAll();
+      renderRail();
+      currentPageIndex = startIdx;
+      slotA.innerHTML = renderPage(PAGES[startIdx]);
+      fitSlotContent(slotA);
+      updateChrome();
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
